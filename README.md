@@ -1,5 +1,5 @@
 <h1>Camp Blog Project</h1>
-<hr></hr>
+
 <p>This is a campground blog where people can post campsite, view and comment on other people's post, and search for specific campsite</p>
 
 <ul>
