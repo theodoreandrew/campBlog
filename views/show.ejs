@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<div class="container" style="padding-right : 0; padding-left : 0;">
+	<h1><%= campgroundInfo.name %></h1>
+
+	<img src="<%= campgroundInfo.image %>">
+
+	<p><%= campgroundInfo.description %></p>
+
+	<a href="/campgrounds/<%= campgroundInfo._id %>/edit" class="btn btn-primary">Edit</a>
+
+	<form action="/campgrounds/<%= campgroundInfo._id %>?_method=DELETE" method="POST" id="deleted">
+		<button class="btn btn-danger">Delete</button>
+	</form>
+</div>
+
+<% include partials/footer %>

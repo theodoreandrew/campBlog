@@ -1,0 +1,14 @@
+<% include partials/header.ejs %>
+
+<div class="container">
+	<h1 style="text-align : center; margin: 15px 0 15px 0;">Edit this Campground</h1>
+
+	<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" style="text-align: center;">
+		<input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>" style="width: 30%; margin: 10px auto;">
+		<input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>" style="width: 30%; margin: 10px auto;">
+		<input class="form-control" type="text" name="campground[description]" value="<%= campground.description %>" style="width: 30%; margin: 10px auto;">
+		<button class="btn-primary btn-lg" style="width: 30%;">Submit</button>
+	</form>
+</div>
+
+<% include partials/footer.ejs %>
