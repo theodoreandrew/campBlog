@@ -2,25 +2,18 @@ var express = require("express"),
 	app = express(),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose"),
-	methodOverride = require("method-override");
+	methodOverride = require("method-override"),
+	Campground = require("./models/campground"),
+	Comment = require("./models/comment");
+	// seedDB = require("./seeds");
 
 mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser : true});
-
-// Design the schema
-var campgroundSchema = new mongoose.Schema({
-	name : String,
-	image : String,
-	description : String
-})
-
-// Design model
-var Campground = mongoose.model("Campground", campgroundSchema);
-
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(methodOverride("_method"));
+// seedDB();
 
 
 app.get("/", function(req, res){
@@ -35,7 +28,7 @@ app.get("/campgrounds", function(req, res){
 			console.log(err);
 		} else {
 			// Go to campgrounds page and show all campgrounds
-			res.render("campgrounds", {campData : wholeCampgrounds});
+			res.render("campgrounds/index", {campData : wholeCampgrounds});
 		}
 	});
 });
@@ -55,18 +48,18 @@ app.post("/campgrounds", function(req, res){
 
 // NEW ROUTE
 app.get("/campgrounds/new", function(req, res){
-	res.render("new"); 
+	res.render("campgrounds/new"); 
 });
 
 // SHOW ROUTE
 app.get("/campgrounds/:id", function(req, res){
 	// Find the id of specific campground
-	Campground.findById(req.params.id, function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
 		if(err){
 			console.log(err);
 		} else {
 			// Get the info and display it
-			res.render("show", {campgroundInfo : foundCampground});
+			res.render("campgrounds/show", {campgroundInfo : foundCampground});
 		}
 	});
 });
@@ -77,7 +70,7 @@ app.get("/campgrounds/:id/edit", function(req, res){
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("edit", {campground: foundCampground});
+			res.render("campgrounds/edit", {campground: foundCampground});
 		}
 	})
 });
@@ -100,6 +93,38 @@ app.delete("/campgrounds/:id", function(req, res){
 			console.log(err);
 		} else {
 			res.redirect("/campgrounds");
+		}
+	});
+});
+
+// ===========================
+// COMMENT ROUTE
+// ===========================
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+	Campground.findById(req.params.id, function(err, campground){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render("comments/new", {campground : campground});
+		}
+	});
+});
+
+app.post("/campgrounds/:id/comments", function(req, res){
+	Campground.findById(req.params.id, function(err, campground){
+		if(err) {
+			console.log(err);
+		} else {
+			Comment.create(req.body.comment, function(err, comment){
+				if(err) {
+					console.log(err);
+				} else {
+					campground.comments.push(comment);
+					campground.save();
+					res.redirect("/campgrounds/" + campground._id);
+				}
+			});
 		}
 	});
 });

@@ -1,3 +1,20 @@
 #deleted {
-	display: inline-block;
+	display: inline;
+}
+
+#buttons {
+	margin-bottom: 20px;
+}
+
+.card {
+	margin-bottom: 20px;
+}
+
+.card img {
+	width : 100%;
+	padding : 0px;
+}
+
+.bg-light {
+	background-color: #f5f5f5;
 }
