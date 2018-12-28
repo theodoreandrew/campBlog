@@ -4,7 +4,6 @@
 	<h1 style="text-align : center; margin: 15px 0 15px 0;">New comment to <%= campground.name %></h1>
 
 	<form action="/campgrounds/<%= campground._id %>/comments" method="POST" style="text-align: center;">
-		<input class="form-control" type="text" name="comment[author]" placeholder="Author" style="width: 30%; margin: 10px auto;">
 		<input class="form-control" type="text" name="comment[text]" placeholder="Comment" style="width: 30%; margin: 10px auto;">
 		<button class="btn-primary btn-lg" style="width: 30%;">Submit</button>
 	</form>
