@@ -4,6 +4,6 @@
 
 <ul>
   <li>FrontEnd Technology: HTML5, CSS3, Bootstrap</li>
-  <li>BackEnd Technology: JavaScript, NodeJS, ExpressJS, REST</li>
+  <li>BackEnd Technology: JavaScript, NodeJS, ExpressJS, PassportJS, REST</li>
   <li>Database: MongoDB</li>
 </ul>
