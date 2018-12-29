@@ -16,6 +16,9 @@
 					<h4 class="float-right">$9.00/night</h4>
 					<h4><%= campgroundInfo.name %></h4>
 					<p><%= campgroundInfo.description %></p>
+					<p>
+						<em>Submitted By : <%= campgroundInfo.author.username %></em>
+					</p>
 					<div id="buttons">
 						<a href="/campgrounds/<%= campgroundInfo._id %>/edit" class="btn btn-primary">Edit</a>
 				

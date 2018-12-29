@@ -16,7 +16,12 @@ router.get("/", function(req, res){
 });
 
 // POST ROUTE
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
+	var author = {
+		id : req.user._id,
+		username : req.user.username
+	}
+	req.body.campground.author = author
 	// Create new element in a DB
 	Campground.create(req.body.campground, function(err, newCampgroundCreated){
 		if(err){
@@ -29,7 +34,7 @@ router.post("/", function(req, res){
 });
 
 // NEW ROUTE
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
 	res.render("campgrounds/new"); 
 });
 
@@ -78,5 +83,13 @@ router.delete("/:id", function(req, res){
 		}
 	});
 });
+
+// middleware
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
 
 module.exports = router;
