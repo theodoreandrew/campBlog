@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router({mergeParams : true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
+var methodOverride = require("method-override");
 
 // Show new comment form
 router.get("/new", isLoggedIn, function(req, res){
@@ -36,12 +37,68 @@ router.post("/", isLoggedIn, function(req, res){
 	});
 });
 
+// Show edit comment form
+router.get("/:comment_id/edit", checkCommentOwnership, function(req, res){
+	Comment.findById(req.params.comment_id, function(err, foundComment){
+		if(err){
+			res.redirect("back");
+		} else {
+			res.render("comments/edit", {campground_id : req.params.id, comment : foundComment});
+		}
+	});
+})
+
+// Update route
+router.put("/:comment_id", checkCommentOwnership, function(req, res){
+	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
+		if(err){
+			res.redirect("back");
+		} else {
+			res.redirect("/campgrounds/" + req.params.id);
+		}
+	});
+});
+
+// Delete route
+router.delete("/:comment_id", checkCommentOwnership, function(req, res){
+	Comment.findByIdAndDelete(req.params.comment_id, function(err){
+		if(err) {
+			res.redirect("back");
+		} else {
+			res.redirect("/campgrounds/" + req.params.id);
+		}
+	})
+})
+
 // middleware
 function isLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	}
 	res.redirect("/login");
+}
+
+// middleware
+function checkCommentOwnership(req, res, next){
+	// Is user logged in
+	if(req.isAuthenticated()){
+		Comment.findById(req.params.comment_id, function(err, foundComment){
+			if(err) {
+				res.redirect("back");
+			} else {
+				// Does the owner own the comment?
+				if(foundComment.author.id.equals(req.user._id)){
+					next();
+				} else {
+					// Otherwise redirect
+					res.redirect("back");
+				}
+			}
+		}); 
+	} else {
+		// Otherwise redirect
+		res.redirect("back");
+	}
 }
 
 module.exports = router;
