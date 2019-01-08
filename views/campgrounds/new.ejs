@@ -1,16 +1,23 @@
 <% include ../partials/header %>
 
-<div class="container">
-	<h1 style="text-align : center; margin: 15px 0 15px 0;">Create a new Campground</h1>
+<div class="container" style="margin-bottom : 30px;">
+	<h1 class="formHeader">Create a new Campground</h1>
 
-	<form action="/campgrounds" method="POST" style="text-align: center;">
-		<input class="form-control" type="text" name="campground[name]" placeholder="Campground Name" style="width: 30%; margin: 10px auto;">
-		<input class="form-control" type="text" name="campground[image]" placeholder="Campground Image url" style="width: 30%; margin: 10px auto;">
-		<input class="form-control" type="text" name="campground[description]" placeholder="Campground Description" style="width: 30%; margin: 10px auto;">
-		<button class="btn-primary btn-lg" style="width: 30%;">Submit</button>
-	</form>
+	<div class="form">
+		<form action="/campgrounds" method="POST" style="text-align: center;">
+			<label for="location">Name</label>
+			<input class="form-control" type="text" name="campground[name]" placeholder="Campground Name">
+			<label for="location">Image</label>
+			<input class="form-control" type="text" name="campground[image]" placeholder="Campground Image url">
+			<label for="location">Description</label>
+			<textarea id="description" class="form-control" name="campground[description]" placeholder="Campground Description"></textarea>
+			<label for="location">Location</label>
+			<input class="form-control" type="text" name="location" placeholder="Leavenworth, WA">
+			<button class="btn-primary btn submitBtn">Add It</button>
+		</form>
+	</div>
 	
-	<div class="container" style="margin-top: 15px;">
+	<div class="container" style="margin-top: 20px;">
 		<center><a href="/campgrounds">View All Campgrounds</a></center>
 	</div>
 	

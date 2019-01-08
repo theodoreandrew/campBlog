@@ -1,14 +1,22 @@
 <% include ../partials/header %>
 
 <div class="container">
-	<h1 style="text-align : center; margin: 15px 0 15px 0;">Edit this Campground</h1>
+	<h1 class="formHeader">Edit this Campground</h1>
 
-	<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" style="text-align: center;">
-		<input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>" style="width: 30%; margin: 10px auto;">
-		<input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>" style="width: 30%; margin: 10px auto;">
-		<input class="form-control" type="text" name="campground[description]" value="<%= campground.description %>" style="width: 30%; margin: 10px auto;">
-		<button class="btn-primary btn-lg" style="width: 30%;">Submit</button>
-	</form>
+	<div class="form">
+		<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+			<label for="location">Name</label>
+			<input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>">
+			<label for="location">Image</label>
+			<input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>">
+			<label for="location">Description</label>
+			<textarea id="description" class="form-control" name="campground[description]"><%= campground.description %></textarea>
+			<label for="location">Location</label>
+			<input class="form-control" type="text" name="location" value="<%= campground.location %>">
+			<button class="btn-primary btn submitBtn">Edit It</button>
+		</form>
+	</div>
+	
 </div>
 
 <% include ../partials/footer %>
