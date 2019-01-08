@@ -11,12 +11,17 @@
 			<input class="form-control" type="text" name="campground[image]" value="<%= campground.image %>">
 			<label for="location">Description</label>
 			<textarea id="description" class="form-control" name="campground[description]"><%= campground.description %></textarea>
+			<label for="location">Price</label>
+			<input class="form-control" type="number" name="campground[price]" min="0" step="0.01" value="<%= campground.price %>>">
 			<label for="location">Location</label>
 			<input class="form-control" type="text" name="location" value="<%= campground.location %>">
 			<button class="btn-primary btn submitBtn">Edit It</button>
 		</form>
 	</div>
 	
+	<div class="container" style="margin-top: 20px;">
+		<center><a href="/campgrounds">View All Campgrounds</a></center>
+	</div>
 </div>
 
 <% include ../partials/footer %>

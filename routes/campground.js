@@ -45,8 +45,6 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			req.flash("error", "Invalid Location");
 			return res.redirect("back");
 		}
-		console.log(data);
-		console.log(req.body.location);
 		req.body.campground.lat = data[0].latitude;
 		req.body.campground.lng = data[0].longitude;
 		req.body.campground.location = data[0].formattedAddress;
