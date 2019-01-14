@@ -20,7 +20,8 @@
 }
 
 .formHeader {
-	text-align : center; 
+	text-align: center;
+	white-space: nowrap;
 }
 
 .form {
@@ -51,4 +52,11 @@
 
 label {
 	margin : 10px 0 ;
+}
+
+#adminUsername {
+	outline: none !important;
+	border:none;
+	box-shadow: none;
+	text-align: center;
 }

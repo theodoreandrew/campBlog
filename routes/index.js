@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var middleware = require("../middleware");
 
 // Root route
 router.get("/", function(req, res){
@@ -16,6 +17,10 @@ router.get("/register", function(req, res){
 // Sign up logic
 router.post("/register", function(req, res){
 	var newUser = new User({username : req.body.username});
+	if(newUser.username == "admin"){
+		req.flash("error", "Cannot register with username " + newUser.username);
+		return res.redirect("register");
+	}
 	User.register(newUser, req.body.password, function(err, user){
 		if(err) {
 			req.flash("error", err.message);
@@ -41,6 +46,28 @@ router.post("/login", passport.authenticate("local",
 		failureFlash : {
 			type : 'error',
 			message : "Incorrect username or password"
+		}
+	}), function(req, res){
+});
+
+// Show Admin Log In form
+router.get("/admin", function(req, res){
+	User.findById(process.env.ADMIN_ID, function(err, adminFound){
+		if(err){
+			return res.redirect("back");
+		}
+		res.render("admin", {admin : adminFound});
+	})
+});
+
+// Admin Log In Logic
+router.post("/admin", passport.authenticate("local", 
+	{
+		successRedirect : "/campgrounds",
+		failureRedirect : "/admin",
+		failureFlash : {
+			type : 'error',
+			message : "Incorrect password"
 		}
 	}), function(req, res){
 });

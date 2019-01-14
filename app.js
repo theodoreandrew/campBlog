@@ -11,7 +11,7 @@ var express = require("express"),
 	Campground = require("./models/campground"),
 	Comment = require("./models/comment"),
 	User = require("./models/user");
-	// seedDB = require("./seeds");
+	seedDB = require("./seeds");
 
 // Routes requirement
 var campgroundRoutes = require("./routes/campground"),
@@ -26,7 +26,6 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(methodOverride("_method"));
 app.use(flash());
 app.locals.moment = require("moment");
-// seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
